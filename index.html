@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面未找到 - 404</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --secondary: #ea580c;
+            --error: #ef4444;
+            --error-light: rgba(239, 68, 68, 0.1);
+            --bg: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            --surface: rgba(255, 255, 255, 0.95);
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: rgba(229, 231, 235, 0.8);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.12);
+            --glass: rgba(255, 255, 255, 0.7);
+            --blur: blur(10px);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 背景装饰元素 */
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(40px);
+            opacity: 0.4;
+        }
+        
+        .bg-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #059669, #10b981);
+            top: -150px;
+            right: -100px;
+        }
+        
+        .bg-2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #ea580c, #f59e0b);
+            bottom: -100px;
+            left: -50px;
+        }
+        
+        .bg-3 {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            bottom: 20%;
+            right: 10%;
+        }
+        
+        /* 主容器 */
+        .container {
+            width: 100%;
+            max-width: 520px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 卡片 */
+        .card {
+            background: var(--surface);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 48px 40px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* 错误代码 */
+        .error-code {
+            font-size: 140px;
+            font-weight: 900;
+            color: var(--error);
+            line-height: 1;
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .error-code::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--error), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        /* 标题 */
+        .error-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 24px 0 16px;
+            color: var(--text);
+        }
+        
+        /* 描述 */
+        .error-description {
+            color: var(--text-light);
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 380px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 按钮区域 */
+        .actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(40, 40);
+                opacity: 0;
+            }
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 16px rgba(5, 150, 105, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(5, 150, 105, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-icon {
+            font-size: 18px;
+        }
+        
+        /* 页脚 */
+        .footer {
+            color: var(--text-light);
+            font-size: 14px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .footer a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .footer a:hover::after {
+            width: 100%;
+        }
+        
+        /* 装饰线 */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 32px 0;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 640px) {
+            .card {
+                padding: 40px 24px;
+                border-radius: 20px;
+            }
+            
+            .error-code {
+                font-size: 100px;
+            }
+            
+            .error-title {
+                font-size: 28px;
+            }
+            
+            .error-description {
+                font-size: 16px;
+            }
+            
+            .actions {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                padding: 14px 24px;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-element bg-1"></div>
+    <div class="bg-element bg-2"></div>
+    <div class="bg-element bg-3"></div>
+    
+    <div class="container">
+        <div class="card fade-in">
+            <div class="error-code fade-in">404</div>
+            <h1 class="error-title delay-1">页面未找到</h1>
+            <p class="error-description delay-1">
+                抱歉，您访问的页面不存在或已被移除。<br>
+                请检查URL是否正确，或返回首页。
+            </p>
+            
+            <div class="divider delay-2"></div>
+            
+            <div class="actions delay-2">
+                <a href="/" class="btn btn-primary">
+                    <i class="fas fa-home btn-icon"></i>
+                    返回首页
+                </a>
+                <button onclick="window.history.back()" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left btn-icon"></i>
+                    返回上一页
+                </button>
+            </div>
+            
+            <div class="footer delay-3">
+                <p>需要帮助？ <a href="/contact">联系我们</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为按钮添加点击涟漪效果
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // 创建涟漪效果
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.7);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        width: ${size}px;
+                        height: ${size}px;
+                        top: ${y}px;
+                        left: ${x}px;
+                        pointer-events: none;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    // 移除涟漪元素
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
